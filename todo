@@ -1,0 +1,26 @@
+Hallo David,
+
+Der Input für eine Kurve sind zwei Arrays. Ein Array beinhaltet die
+True positive rate, einer die False positive rate. Beispiele siehe
+angehängtes Excel Sheet.
+
+Ausgabe sollte ein svg-File sein (nicht jpeg wie ichs gesagt hab
+sorry), weil das ein Vectorgraphikformat ist, dass man verlustfrei
+skalieren kann.
+
+Gut wäre wenn auch mehrere Kurven plottbar wären (die Länge der Arrays
+pro Kurve kann unterschiedlich lang sein), und man pro Kurve noch
+einen Namen übergeben kann der dann in der Legende steht.
+
+Eigenen tut sich dafür wie gesagt gnuplot (http://www.gnuplot.info/).
+
+Auf dieser Seite:
+http://vision.ai.uiuc.edu/mhyang/face-detection-survey.html
+gibt es einen Beispiel Roc-plot und ein gnuplot script:
+http://vision.ai.uiuc.edu/mhyang/face-detection-survey_files/plot.gp
+
+Du könntest zum Beispiel von ruby aus das gnuplot-script und die
+datenfiles erzeugen, und dann gnuplot starten.
+
+Viele Dank und viele Grüße,
+Martin
