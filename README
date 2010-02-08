@@ -1,1 +1,10 @@
-svg_roc_plot README
+README
+svg_roc_plot.rb
+Copyright 2010 vorgrimmler <dv(a_t)fdm.uni-freiburg.de>
+This ruby program exports inputs data(from true-positive-rate and false-positive-rate files) to a *.svg file using gnuplot. Depending on the amount of input data is possible to create 1 to n curves in one plot. 
+Gnuplot is needed. Please install befor using svg_roc_plot. "sudo apt-get install gnuplot" (on debian systems)
+
+Usage: ruby svg_roc_plot.rb ([filename_1] [filename_2]) ... ([filename_1] [filenam_2])
+ cmd=filename_1 : This should be the filename of the ture-positiv-rate data.
+ cmd=filename_2 : This should be the filename of the false-positiv-rate data.
+ Only pairs of input files are allowed but at least one.
