@@ -1,5 +1,5 @@
 #!/usr/bin/ruby1.8
-# svg_roc_plot method - svg_roc_plot.rb
+# svg_roc_plot method - svg_roc_plot_method.rb
 #       
 #	Copyright 2010 vorgrimmler <dv(a_t)fdm.uni-freiburg.de>
 #	This ruby method (svg_roc_plot) exports inputs data(from true-positive-rate and false-positive-rate arrays) to a *.svg file using gnuplot. Depending on the amount of input data is possible to create 1 to n curves in one plot. 
