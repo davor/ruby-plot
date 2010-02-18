@@ -2,7 +2,7 @@
 # svg_roc_plot method - svg_roc_plot_method.rb
 #       
 #	Copyright 2010 vorgrimmler <dv(a_t)fdm.uni-freiburg.de>
-#	This ruby method (svg_roc_plot) exports inputs data(from true-positive-rate and false-positive-rate arrays) to a *.svg file using gnuplot. Depending on the amount of input data is possible to create 1 to n curves in one plot. 
+#	This ruby method (svg_roc_plot) exports input data(from true-positive-rate and false-positive-rate arrays) to a *.svg file using gnuplot. Depending on the amount of input data is possible to create 1 to n curves in one plot. 
 #	Gnuplot is needed. Please install befor using svg_roc_plot. "sudo apt-get install gnuplot" (on debian systems).
 #	Usage: See below.
 
@@ -19,8 +19,8 @@ module Svg_Roc_Plot
     
     data = []
     (0..x_values.size-1).each do |i|
-      data << x_values[i]
       data << y_values[i]
+      data << x_values[i]
     end
     
     #Main
@@ -55,22 +55,8 @@ module Svg_Roc_Plot
   	end
   	
   	dat_number=0
-  	# -----------------------------------------------------
-  	# create random_0.dat file for gnuplot
-  	# -----------------------------------------------------
+  	
   	output_dat_arr = Array.new
-  	for i in 0..100
-  		output_dat_arr[i] = "#{i} #{i}"
-  	end
-  	# -----------------------------------------------------
-  	# write random_0.dat files
-  	# -----------------------------------------------------
-  	# write output_dat_arr content in new *.dat file
-  	File.open( "random_#{dat_number}.dat", "w" ) do |the_file|
-  	   	the_file.puts output_dat_arr
-  	end
-  	LOGGER.debug "random_#{dat_number}.dat created."
-  	output_dat_arr.clear
   	
   	
   	# -----------------------------------------------------
@@ -131,12 +117,13 @@ module Svg_Roc_Plot
   	output_plt_arr.push "set key invert reverse Left outside"
   	output_plt_arr.push "set xlabel \"#{x_lable}\""
   	output_plt_arr.push "set ylabel \"#{y_lable}\""
+    output_plt_arr.push "set arrow from 0,0 to 100,100 nohead"
   	output_plt_arr.push ""
   	output_plt_arr.push ""
   	output_plt_arr.push ""
   	output_plt_arr.push ""
   	output_plt_arr.push "# Draws the plot and specifies its appearance ..."
-  	output_plt_arr.push "plot	'random_0.dat' using 1:2 title 'random' with lines lw 1, \\"
+  	output_plt_arr.push "plot	\\"#'random_0.dat' using 1:2 title 'random' with lines lw 1, \\"
   	i = 0
   	for i in 0..names.length-1
       
@@ -170,8 +157,6 @@ module Svg_Roc_Plot
   	# -----------------------------------------------------
   	`rm config.plt`
   	LOGGER.debug "config.plt removed."
-  	`rm random_0.dat`
-  	LOGGER.debug "random_0.dat removed."
   	for i in 0..names.length-1
   		`rm data#{i}.dat`
   		LOGGER.debug "data#{i}.dat removed."
@@ -184,10 +169,7 @@ module Svg_Roc_Plot
    true if Float(object) rescue false
   end
 
-
 end
 
 #test function
-#Svg_Roc_Plot::plot("/home/martin/tmp/result.svg" , "name of title", "pos", "neg", ["name1", "name2"], [20,60,80], [15,50,90],[10,25,70,95],[20,40,50,70])
-#Svg_Roc_Plot::plot("/home/martin/tmp/result.svg" , "name of title", "pos", "neg", [ ["name1",[20,60,80],[15,50,90]], ["name2",[10,25,70,95],[20,40,50,70],true] ] )
-#svg_roc_plot("/home/martin/tmp/result.svg" , "name of title", "pos", "neg", ["name1"], [20,60,80], [15,50,90])
+Svg_Roc_Plot::plot("/home/martin/tmp/result.svg" , "name of title", "x-values", "y-values", ["name", "test", "bla"], [[20,60,80], [10,25,70,95], [12,78,99]], [[15,50,90],[20,40,50,70],[34,89,89]],[true,false,true])
