@@ -15,8 +15,15 @@ end
 
 module Svg_Roc_Plot
 
-  def self.plot(svg_path, title, x_lable, y_lable, names, *data)
-  	# Main
+  def self.plot(svg_path, title, x_lable, y_lable, names, x_values, y_values, faint=nil)
+    
+    data = []
+    (0..x_values.size-1).each do |i|
+      data << x_values[i]
+      data << y_values[i]
+    end
+    
+    #Main
   	STDOUT.sync = true
   	# -----------------------------------------------------
   	# checking input
@@ -25,6 +32,9 @@ module Svg_Roc_Plot
   	status=false
   	LOGGER.debug "#{names.length} algs entered"
   	
+    #LOGGER.debug names.inspect
+    #LOGGER.debug data.inspect
+    
   	if names.length != data.length/2
   	    status=true
   	end
@@ -91,10 +101,10 @@ module Svg_Roc_Plot
   			#write *.dat files
   			#-----------------------------------------------------
   			#write output_dat_arr content in new *.dat file
-  			File.open( "#{names[i]}.dat", "w" ) do |the_file|
+  			File.open( "data#{i}.dat", "w" ) do |the_file|
   			   	the_file.puts output_dat_arr
   			end
-  			LOGGER.debug "#{names[i]}.dat created."
+  			LOGGER.debug "data#{i}.dat created."
   			output_dat_arr.clear
   					
   		else
@@ -129,10 +139,14 @@ module Svg_Roc_Plot
   	output_plt_arr.push "plot	'random_0.dat' using 1:2 title 'random' with lines lw 1, \\"
   	i = 0
   	for i in 0..names.length-1
+      
+      #style = grey[i] ? "lw 1.5 lt 0" : "lw 3" 
+      style = faint!=nil && faint[i] ? "lw 1.5" : "lw 4"
+      
   		if i == names.length-1
-  			output_plt_arr.push "	'#{names[i]}.dat'  using 2:1 title '#{names[i]}' with lines lw 3"
+  			output_plt_arr.push "	'data#{i}.dat'  using 2:1 title '#{names[i]}' with lines #{style}"
   		else
-  			output_plt_arr.push "	'#{names[i]}.dat'  using 2:1 title '#{names[i]}' with lines lw 3, \\"
+  			output_plt_arr.push "	'data#{i}.dat'  using 2:1 title '#{names[i]}' with lines #{style}, \\"
   		end
   	end
   	output_plt_arr.push ""
@@ -159,14 +173,14 @@ module Svg_Roc_Plot
   	`rm random_0.dat`
   	LOGGER.debug "random_0.dat removed."
   	for i in 0..names.length-1
-  		`rm #{names[i]}.dat`
-  		LOGGER.debug "#{names[i]}.dat removed."
+  		`rm data#{i}.dat`
+  		LOGGER.debug "data#{i}.dat removed."
   	end
   end
  
   private
   # float check
-  def self.numeric?(object)
+  def self.numeric?(object) 
    true if Float(object) rescue false
   end
 
@@ -175,4 +189,5 @@ end
 
 #test function
 #Svg_Roc_Plot::plot("/home/martin/tmp/result.svg" , "name of title", "pos", "neg", ["name1", "name2"], [20,60,80], [15,50,90],[10,25,70,95],[20,40,50,70])
+#Svg_Roc_Plot::plot("/home/martin/tmp/result.svg" , "name of title", "pos", "neg", [ ["name1",[20,60,80],[15,50,90]], ["name2",[10,25,70,95],[20,40,50,70],true] ] )
 #svg_roc_plot("/home/martin/tmp/result.svg" , "name of title", "pos", "neg", ["name1"], [20,60,80], [15,50,90])
