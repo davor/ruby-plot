@@ -2,7 +2,7 @@
 # svg_roc_plot method - svg_roc_plot_method.rb
 #       
 #	Copyright 2010 vorgrimmler <dv(a_t)fdm.uni-freiburg.de>
-#	This ruby method (svg_roc_plot) exports inputs data(from true-positive-rate and false-positive-rate arrays) to a *.svg file using gnuplot. Depending on the amount of input data is possible to create 1 to n curves in one plot. 
+#	This ruby method (svg_roc_plot) exports input data(from true-positive-rate and false-positive-rate arrays) to a *.svg file using gnuplot. Depending on the amount of input data is possible to create 1 to n curves in one plot. 
 #	Gnuplot is needed. Please install befor using svg_roc_plot. "sudo apt-get install gnuplot" (on debian systems).
 #	Usage: See below.
 
@@ -91,10 +91,10 @@ def svg_roc_plot(svg_path, title, x_lable, y_lable, names, *data)
 			#write *.dat files
 			#-----------------------------------------------------
 			#write output_dat_arr content in new *.dat file
-			File.open( "#{names[i-2]}.dat", "w" ) do |the_file|
+			File.open( "#{names[i]}.dat", "w" ) do |the_file|
 			   	the_file.puts output_dat_arr
 			end
-			puts "#{names[i-2]}.dat created."
+			puts "#{names[i]}.dat created."
 			output_dat_arr.clear
 					
 		else
@@ -119,15 +119,16 @@ def svg_roc_plot(svg_path, title, x_lable, y_lable, names, *data)
 	output_plt_arr.push "set yrange [0:100]"
 	output_plt_arr.push "set grid"
 	output_plt_arr.push "set title \"#{title}\""
-	output_plt_arr.push "set key outside right"
+	output_plt_arr.push "set key invert reverse Left outside"
 	output_plt_arr.push "set xlabel \"#{x_lable}\""
 	output_plt_arr.push "set ylabel \"#{y_lable}\""
+	output_plt_arr.push "set arrow from 0,0 to 100,100 nohead"
 	output_plt_arr.push ""
 	output_plt_arr.push ""
 	output_plt_arr.push ""
 	output_plt_arr.push ""
 	output_plt_arr.push "# Draws the plot and specifies its appearance ..."
-	output_plt_arr.push "plot	'random_0.dat' using 1:2 title 'random' with lines, \\"
+	output_plt_arr.push "plot	\\"#'random_0.dat' using 1:2 title 'random' with lines, \\"
 	i = 0
 	for i in 0..names.length-1
 		if i == names.length-1
@@ -166,4 +167,4 @@ def svg_roc_plot(svg_path, title, x_lable, y_lable, names, *data)
 end
 
 #test function
-#svg_roc_plot("/media/sda4/baloerrach/work/guetlein/svg_roc_plot/result.svg" , "name of title", "pos", "neg", ["name1", "name2"], [20,60,80], [15,50,90],[10,25,70,95],[20,40,50,70])
+svg_roc_plot("/media/sda4/baloerrach/work/guetlein/svg_roc_plot/result.svg" , "name of title", "pos", "neg", ["name1", "name2", "name3"], [20,60,80], [15,50,90], [20,40,80], [15,30,90], [20,30,40,80], [15,20,50,90])
