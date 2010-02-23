@@ -112,7 +112,7 @@ module Svg_Roc_Plot
   	
   	output_plt_arr.push "set xrange [0:100]"
   	output_plt_arr.push "set yrange [0:100]"
-  	output_plt_arr.push "set grid"
+  	output_plt_arr.push "set grid lw 0.5"
   	output_plt_arr.push "set title \"#{title}\""
   	output_plt_arr.push "set key invert reverse Left outside"
   	output_plt_arr.push "set xlabel \"#{x_lable}\""
@@ -128,7 +128,7 @@ module Svg_Roc_Plot
   	for i in 0..names.length-1
       
       #style = grey[i] ? "lw 1.5 lt 0" : "lw 3" 
-      style = faint!=nil && faint[i] ? "lw 1.5" : "lw 4"
+      style = faint!=nil && faint[i] ? "lw 2" : "lw 4"
       
   		if i == names.length-1
   			output_plt_arr.push "	'data#{i}.dat'  using 2:1 title '#{names[i]}' with lines #{style}"
