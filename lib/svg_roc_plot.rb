@@ -146,11 +146,19 @@ module Svg_Roc_Plot
   	File.open( "config.plt", "w" ) do |the_file|
   		the_file.puts output_plt_arr
   	end
-  	LOGGER.debug "config.plt created."
+  	LOGGER.debug "config.plt created, running gnuplot"
   	
   	# start gnuplot with created *.plt file
-  	`gnuplot config.plt`
-  	LOGGER.debug "#{svg_path} created."
+    cmd = "gnuplot config.plt 2>&1"
+    response = ""
+    IO.popen(cmd) do |f| 
+      while line = f.gets
+        response += line
+      end
+    end
+    raise "gnuplot failes (cmd: "+cmd.to_s+", out: "+response.to_s+")" unless $?==0
+    
+  	LOGGER.debug "#{svg_path} created. "
   	
   	# -----------------------------------------------------
   	# remove *.plt and *.dat files
@@ -163,13 +171,16 @@ module Svg_Roc_Plot
   	end
   end
  
+  def self.test_plot
+    plot("/home/martin/tmp/result.svg" , "name of title", "x-values", "y-values", ["name", "test", "bla"], [[20,60,80], [10,25,70,95], [12,78,99]], [[15,50,90],[20,40,50,70],[34,89,89]],[true,false,true])
+  end
+ 
   private
   # float check
   def self.numeric?(object) 
    true if Float(object) rescue false
   end
-
 end
 
 #test function
-Svg_Roc_Plot::plot("/home/martin/tmp/result.svg" , "name of title", "x-values", "y-values", ["name", "test", "bla"], [[20,60,80], [10,25,70,95], [12,78,99]], [[15,50,90],[20,40,50,70],[34,89,89]],[true,false,true])
+#Svg_Roc_Plot::test_plot()
