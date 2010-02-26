@@ -4,12 +4,12 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{svg_roc_plot}
+  s.name = %q{ruby-plot}
   s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Vorgrimmler", "Martin G\303\274tlein"]
-  s.date = %q{2010-02-23}
+  s.date = %q{2010-02-26}
   s.description = %q{}
   s.email = %q{vorgrimmlerdavid@gmx.de}
   s.extra_rdoc_files = [
@@ -19,10 +19,13 @@ Gem::Specification.new do |s|
     "README",
      "Rakefile",
      "VERSION",
-     "lib/svg_roc_plot.rb"
+     "lib/plot_bars.rb",
+     "lib/plot_lines.rb",
+     "lib/ruby-plot.rb",
+     "lib/ruby-plot.rb"
   ]
   s.has_rdoc = true
-  s.homepage = %q{http://github.com/davor/svg_roc_plot}
+  s.homepage = %q{http://github.com/davor/ruby-plot}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
